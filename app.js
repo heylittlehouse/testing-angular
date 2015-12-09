@@ -5,11 +5,15 @@ app.controller("frontPage", function($scope, $http){
     $scope.posts = response.data.data.children
   });
 
-  $scope.comments = function(){
+  $scope.toggleComments = function(item){
     event.preventDefault();
-    $http.get(event.target.href).then(function(response){
-      var commentsArray = response.data[1].data.children
-      console.log(commentsArray)
-    })
-  }
+    if(item.comments) {
+      item.comments = null;
+    }else{
+      $http.get(event.target.href).then(function(response){
+        var commentsArray = response.data[1].data.children;
+        item.comments = commentsArray;
+      })
+    }
+  };
 });
